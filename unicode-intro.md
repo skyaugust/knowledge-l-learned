@@ -82,13 +82,13 @@ java使用什么编码呢？
 javac命令得到的字节码文件，查看16进制文件, 常量 "abcd你" 以utf-8方式存储。"61 62 63 64 E4 BD A0"
 
 
-![img](\hex-javaclass.bmp)
+![img](http://10.1.0.11/wanqiangxin/knowledge/raw/master/hex-javaclass.bmp)
 
 
 再看char c2 = '好'，以utf-16方式存储。"4F 60"
 
 
-![img](\hex-utf16injava.bmp)
+![img](http://10.1.0.11/wanqiangxin/knowledge/raw/master/hex-javaclass.bmp)
 
 当然这些对我们都是透明的，我们只关心从Java上层中得到的编码格式。
 
