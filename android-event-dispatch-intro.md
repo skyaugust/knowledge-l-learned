@@ -1,8 +1,8 @@
-#Android事件分发
+# Android事件分发
 View是单个“交互区域”，如TextView， EditText，Button，ImageView等控件。他们收到事件，自己处理完，给上层一个反馈，就完事了。
 
 ViewGroup有一个或多个“交互区域”，是个树型结构，根节点是ViewGroup，叶子节点是单View。因此事件处理复杂一些。
-##View中的MotionEvent事件处理
+## View中的MotionEvent事件处理
 
 主要过程：View通过dispatchTouchEvent拿到MotionEvent，并调用onTounchEvent来处里，产生各种事件回调。boolean返回值告诉dispatchTouchEvent的直接者，这个View有无处理本次事件。
 
@@ -30,7 +30,7 @@ onTouchEvent，其返回值影响dispatchTouchEvent事件返回值。如果onTou
 
 至于View的**事件从哪里来**(谁调的View.dispatchTouchEvent),**谁得到了View对事件的处理结果**（ dispatchTouchEvent的返回值），得到的**返回结果有什么影响**，需要再探索一下。
 
-##ViewGroup中的MotionEven事件处理
+## ViewGroup中的MotionEven事件处理
 ViewGroup是若干View类型的组合，保存在成员变量mChildren中：
 
 	private View[] mChildren;
