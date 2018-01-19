@@ -1,4 +1,4 @@
-#Android中的线程
+# Android中的线程
 Android中的线程按其工作内容，可为两类：主线程与子线程。前者负责UI相关操作以及重要组件的生命周期控制，由系统创建；后者执行主线程职责之外工作，一般为耗时的操作，由开发者创建。
 
 ## 主线程
@@ -94,5 +94,5 @@ AsyncTask的核心实现是将一个FutureTask提交到SerialExecutor中执行�
 
 我们注意到AsyncTask的cancel方法还有一个boolean入参，若参入cancel(true), 会将FurtureTask所在线程的中断标志设置为true，向线程发个“通知”，你需要在run/call方法中响应这个标记来决定是否提前结束线程中的任务。这个有一定帮助，但碰到一些无法响应中断的情况，比如一些网络IO，就没办法了。
 
-###HandlerThread
+### HandlerThread
 
