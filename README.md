@@ -33,3 +33,7 @@ http://gitsinovoice/wanqiangxin/knowledge/blob/master/thread-intro.md
 
 http://gitsinovoice/wanqiangxin/knowledge/blob/master/unicode-intro.md
 
+### Effective java 笔记
+
+http://gitsinovoice/wanqiangxin/knowledge/blob/master/effective-java.md
+
