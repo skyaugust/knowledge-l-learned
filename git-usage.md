@@ -34,7 +34,6 @@ git fetch方式，手动merge
  * git remote -v
  
     列出本地记录的远程仓库url, 比如有origin的
-    
  * git remote set-url origin git@github.com:username/newrepo.git
 
     完成修改
