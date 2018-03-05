@@ -46,5 +46,5 @@ git config --global core.autocrlf false
  * CR(Carriage Return) 代表回车，对应字符 '\r'
  * LF(Line Feed) 代表换行，对应字符 '\n'
  * DOS/Windows系统采用CRLF(即回车+换行)表示下一行
- * Linux/UNIX系统采用LF表示下一行
+ * Linux/UNIX/Android系统采用LF表示下一行
  * MAC系统采用CR表示下一行
