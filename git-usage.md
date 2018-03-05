@@ -42,3 +42,9 @@ git fetch方式，手动merge
 
 大家在使用Git时，最好配置一下如下指令，禁用windows环境和Linux环境下换行符不同的智能检测转换， 因为我们都是用的windows开发的，所以执行了下面的指令关闭Git的这个转换，不然一些文件可能会出问题。
 git config --global core.autocrlf false
+
+ * CR(Carriage Return) 代表回车，对应字符 '\r'
+ * LF(Line Feed) 代表换行，对应字符 '\n'
+ * DOS/Windows系统采用CRLF(即回车+换行)表示下一行
+ * Linux/UNIX系统采用LF表示下一行
+ * MAC系统采用CR表示下一行
