@@ -36,12 +36,7 @@ interface List<E>{
     ListIterator<E> listIterator(int index)
     List<E> subList(int fromIndex, int toIndex)
 }
-note as Note1
-    Set，List继承了Collction，通过接口名称（Set， List）、继承的接口方法DOC描述（javadoc）、新增接口方法，定义了不同的行为模式。
-    比如equals，在collection中就分别为各种情况作出规定；
-    Set中是要求两个Set元素相同即可，与顺序无关；
-    List中要求两个List的元素按位置一次是相同的；
-end note
+
 
 interface Set<E> {
     
@@ -72,7 +67,7 @@ interface Queue<E> {
     E peek() 查看头e，Q为空时，返空
 
 }
-
+Collection <|-- Queue
 interface Deque<E> {
     双端队列addfirst, addLast等
 }
@@ -85,6 +80,7 @@ class LinkedList<E> {
     Node<E> first
     Node<E> last
 }
+
 Iterator <-- Iterable
 Iterable <|-- Collection
 Collection <|-- List
@@ -98,8 +94,29 @@ List <|-- ArrayList
 List <|.. LinkedList
 Queue <|-- Deque
 Deque <|.. LinkedList
+Queue <|.. LinkedList
 AbstractList <|-- AbstractSequentialList
 AbstractSequentialList <|-- LinkedList
+
+
+interface Map<K, V>{
+    interface Entry<K,V>{}
+    V put(K key, V value)
+    V get(K key)
+    V remove(K key)
+    int size()
+    boolean isEmpty()
+    Set<Map.Entry<K,V>> entrySet()
+    Set<K> keySet()
+    Collection<V> values()
+}
+abstract class AbstractQueue<E> {
+    继承自AbstractCollection，同时围绕迭代器实现了队列的一些基本操作：
+    poll()
+}
+
+AbstractCollection <|--  AbstractQueue
+Queue  <|.. AbstractQueue
 
 @enduml
 

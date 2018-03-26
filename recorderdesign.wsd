@@ -1,0 +1,49 @@
+@startuml
+title Recoder App
+interface Recorder {
+    void init()
+    void start()
+    void pause()
+    void resume()
+    void stop()
+    void release()
+
+
+}
+View ..> Presenter 
+View ..> ControlService
+interface View{
+        void clearLogView()
+        void updateLogView(String log)
+        void clearTimeView()
+        void updateTimeView(String time)
+        void switchToPlaying()
+        void switchToStop()
+    }
+interface Presenter{
+        void startRecorder()
+        void stopRecorder()
+        void startClock()
+        void resetClock()
+        int getRecorderState()
+        void attachRecorder(Recoder recorder)
+        void detachRecorder()
+}
+
+Presenter ..> Recorder
+
+class LocalBinder {
+    Recorder getRecorder()
+    List<VoiceItem> getVoiceItems()
+}
+class ControlService {
+    LocalBinder LocalBinder
+}
+ControlService ..> LocalBinder
+
+RecordActivity --|> View
+class RecordActivity{
+
+}
+@enduml
+

@@ -19,7 +19,7 @@ import random
 appkey="2c5d54de"
 dev_key = "developer_key"
 url = "10.0.2.94"
-sdk_version = "8.0"
+sdk_version = "5.0"
 udid = "101:1234567890"
 tid = "49652372"
 eid = "42072569"
@@ -70,7 +70,7 @@ class Test(unittest.TestCase):
 
         headers = {
                    "x-app-key" :appkey,
-                   "x-sdk-version" : 8.0,
+                   "x-sdk-version" : 5.0,
                    "x-request-date": request_date,
                    "x-task-config" : task_config,
                    "x-udid" : "101:1234567890",
