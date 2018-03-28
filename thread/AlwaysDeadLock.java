@@ -23,10 +23,7 @@ public class AlwaysDeadLock{
                         //TODO: handle exception
                     }
                 }
-               
-                
-
-               
+                                      
                 synchronized(waitThreadB_hold_lockA){
                     while(!threadB_has_held_lockA){
                         try {
@@ -60,7 +57,6 @@ public class AlwaysDeadLock{
                     }
                 }
                 
-
                 synchronized(lockB){
                     System.out.println("TaskA hold lockA and lockB");
                 }

@@ -1,4 +1,4 @@
-# 死锁示例
+# 死锁
 
 思路：
 在同一时刻
@@ -91,3 +91,38 @@ ThreadB requires lockedB and holds lockedA;
 
         }
     }
+
+## 必死锁代码
+
+上面的DeadLock类使用Thread.sleep来协调两个线程，故意产生死锁。这样做有一定的随机性，更好的办法是使用更好的线程协作机制来处理。如wait-notify机制，进一步可以使用CountDownLantch来简化。
+
+## wait-notify
+
+
+就像一个团队中若干人员的协调一样，有的时候分开并行工作，某些时候需要停下来相互等待，大家一起做个同步等等。多个线程之间如何做到这些事情？java中通过object的锁来做线程之间的协调，具体就是wait和notify方法，因此线程在调用这两个方法之前，必须已经持有这方法所在的对象锁，通过这个锁来传递同步信息，这也就是为什么会抛出IllegalMonitorStateException。
+
+wait：
+
+    synchronized(waitThreadA_hold_lockB){
+                threadA.start();
+                while(!threadA_has_held_lockB){
+                    try {
+                        waitThreadA_hold_lockB.wait();
+
+                    } catch (Exception e) {
+                        //TODO: handle exception
+                    }
+                }
+            }
+
+当前线程在进入等待状态，此时是持有waitThreadA_hold_lockB锁，
+notify：
+
+    synchronized(waitThreadB_hold_lockA){
+                    try {
+                        threadB_has_held_lockA = true;
+                        waitThreadB_hold_lockA.notify();
+                    } catch (Exception e) {
+                        //TODO: handle exception
+                    }
+                }
