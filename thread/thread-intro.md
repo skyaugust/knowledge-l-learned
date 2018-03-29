@@ -117,18 +117,62 @@ Thread.java定义了6中状态：
     }
 
 ## 内存布局
+* 由程序员按java线程框架实现的各种类，和其他正常类一样存放在方法区。
+* 每创建一个线程，都会在虚拟机栈（也可以称为线程栈）为这个线程分配一片内存。
+* 线程类的私有变量，特别是ThreadLocal变量，是属于这个线程自有的，不会被别的线程访问到，
+* 按产生的方法调用执行顺序，以栈的形式组织。
+* 该线程每调用一次方法，栈层数加1，每结束一次方法（该方法返回），栈层数减1。
+* 最底层的方法就是run 方法，当run方法退出，这个栈也就准备销毁，线程也就进入TERMINATED状态了。
+* 每一层的栈（栈帧）所占用的内存，主要是被调方法的参数变量，数组，局部变量，返回变量等。其中数组过长会引起栈上的内存溢出
+* 栈层数（栈深度）是有限制的, JVM规定超过一定深度就抛出StackOverflowException. 具体是StackSpace参数影响，默认是512K, 也就是50W层方法调用。
+* 通过递归调用方法测试Anroid设备的栈深度。在一台32位的设备上，主线程是261,621 ,子线程是32733；另一台设备，主线程261,469,子线程3,2775; 可知是出厂写死的，同时主线程比子线程高一个数量级，这也是由于主线程要处理更多的事情。
 
-## Java并发库中的线程池
+由上面这种内存布局可看出，除了被调方法内部的局部变量，堆上的变量都是线程共享的，存在线程安全问题所谓线程安全，没有标准定义，一种解释就是，多个线程在读写共享数据时，产生的结果与业务逻辑所期望的一直。
 
+三种方法：
+
+* 线程间不要共享数据。比如ThreadLocal变量
+* 线程间共享不可变数据。比如无副作用的方法调用。本身就是不可变的数据。
+* 线程间通过协调同步对可变数据的访问。加锁同步。
+
+## 线程同步
+
+将多个线程同步起来，按照实现编排的顺序去读写共享数据，达到线程安全的目的。Jvm以monitor为核心，提供了多种同步方式。
+
+### synchronized
+每一个object上都有一个monitor。由于在实际设计编程中，就是围绕Object开展的，所有的临界区数据都存在于object之中，那么在object上放置一个monitor，各个线程就在上面协调，达到同步的目的。
+
+按照编排的顺序去读写共享数据，可使用synchronized来保护，每个准备读写共享数据区的线程，都会尝试获取一个monitor lock，获取到，就持有并进入开始读写，否则，就被阻塞，进入BLOCKED状态，直到获取到这个monitor lock。
+
+* 线程调用synchronized所修饰的方法，是在该方法所属的对象上的monitor上协调
+* 线程调用synchronized所修饰的静态方法，是在该静态方法所属的类的类对象上的monitor上协调
+* 线程调用synchronized(someObjectRef){}所包的代码块，是在someObjectRef对象上的monitor上协调
+
+### wait-notify机制
+
+除了上面一个线程将其他线程通过锁来阻塞的场景，还有一类线程协调场景是一个线程等待某些时机，由另外的线程来触发时机并通知这个线程。wait notify就是一种解决方案。
+
+wait notify为什么强制要求当前线程先获得monitor lock，然后在monitor lock上调用wait/notify？
+两个原因：
+* object.wait()会被任何一个线程调用object.notify() notifyAll() 所唤醒（所谓的虚假唤醒[Spurious wakeup](https://en.wikipedia.org/wiki/Spurious_wakeup) ）,这种情况并不合理，所以强烈推荐在while(condition){}中配合condition使用。condition作为一个临界数据，会在相配套的object.nofity的上下文修改，必须加锁。
+* 线程和线程之间的协调，使用monitor lock本来就是自然的事情。
+
+**notify与notifyall**。当ThreadA 被(conditionA, object.wait())等待，ThreadB被(conditionB, object.wait(())等待时，ThreadC 在conditionA上notify ThreadA。由于notify只随机唤醒一个，ThreadB被唤醒了，从wait中出来，发现conditonB没有满足，又wait了，而真正要被唤醒的ThreadA依旧在wait。这种情况下，notify丢失了。而使用notifyAll就会唤醒ThreadA和ThreadB，A检查conditionA满足，继续工作了，B检查conditionB没有满足，继续wait，与业务逻辑一致，保证了线程安全。
+
+因此除了配合while condition loop在sychronized中使用，还建议使用notifyAll来通知线程唤醒。
+
+wait notify使用有如此多的限制，使用起来并不是很方便，尤其是condition较多的情况下，需要非常仔细地处理。可以参考死锁例子中，使用wait notify是啰嗦的。建议使用CountDownLatch以及其他同步路障来替换。
+
+### volatile关键字
 ## 性能
+
+加锁、尝试获得锁这两个基本操作本身是有开销的。特别是尝试获得锁，失败后会切换线程上下文，造成一定开销。另外锁过多，会导致大量线程调用被阻塞着，从业务角度看，性能有很大损失。
 
 ## 死锁
 
-相互持有锁，相互等待资源
+>DeadLock.md
 
-例子：
-
-
+## Java并发库中的线程池
 
 # Android中的线程
 Android中的线程按其工作内容，可为两类：主线程与子线程。前者负责UI相关操作以及重要组件的生命周期控制，由系统创建；后者执行主线程职责之外工作，一般为耗时的操作，由开发者创建。

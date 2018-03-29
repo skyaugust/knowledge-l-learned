@@ -94,12 +94,18 @@ ThreadB requires lockedB and holds lockedA;
 
 ## 必死锁代码
 
-上面的DeadLock类使用Thread.sleep来协调两个线程，故意产生死锁。这样做有一定的随机性，更好的办法是使用更好的线程协作机制来处理。如wait-notify机制，进一步可以使用CountDownLantch来简化。
+上面的DeadLock类使用Thread.sleep来协调两个线程，故意产生死锁。这样做有一定的随机性，更好的办法是使用更好的线程协作机制来处理。如wait-notify机制，进一步可以使用CountDownLantch来简化，可查考Effective Java 2 第69条。
 
 ## wait-notify
 
 
-就像一个团队中若干人员的协调一样，有的时候分开并行工作，某些时候需要停下来相互等待，大家一起做个同步等等。多个线程之间如何做到这些事情？java中通过object的锁来做线程之间的协调，具体就是wait和notify方法，因此线程在调用这两个方法之前，必须已经持有这方法所在的对象锁，通过这个锁来传递同步信息，这也就是为什么会抛出IllegalMonitorStateException。
+就像一个团队中若干人员的协调一样，有的时候分开并行工作，某些时候需要停下来相互等待，大家一起做个同步等等。
+
+wait notify为什么强制要求当前线程先获得monitor lock，然后在monitor lock上调用wait/notify？
+两个原因：
+* object.wait()会被任何一个线程调用object.notify() notifyAll() 所唤醒（所谓的虚假唤醒[Spurious wakeup](https://en.wikipedia.org/wiki/Spurious_wakeup) ）,这种情况并不合理，所以强烈推荐在while(condition){}中配合condition使用。condition作为一个临界数据，会在相配套的object.nofity的上下文修改，必须加锁。
+* 线程和线程之间的协调，使用monitor lock本来就是自然的事情。
+
 
 wait：
 

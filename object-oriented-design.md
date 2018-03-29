@@ -129,6 +129,8 @@
   
   double check：当一个线程在锁区将要改变instance取值，另一个线程已经通过了第一个if(instance == null)的判断条件，前者改变instance取值离开锁区，后者进入锁区后，又重新改变instance，违背了单例模式，因此在进入锁区，需要重新检查instance。
 
+  >double check 在延迟初始化场景中是较为常用的多线程保护方式。
+
     class Singleton{
       private static instance = null;
       private Singleton(){}
@@ -154,6 +156,7 @@
   为了满足这两个假设，在java 1.5以后引入了volatile关键字，来起到线程间数据强制同步、禁止重排序的作用。
 
   只需在instance增加volatile声明即可。
+
 
 ### 实现五：使用volatile关键字的线程安全的饱汉模式
   
