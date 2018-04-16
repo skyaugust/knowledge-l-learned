@@ -48,3 +48,8 @@ git config --global core.autocrlf false
  * DOS/Windows系统采用CRLF(即回车+换行)表示下一行
  * Linux/UNIX/Android系统采用LF表示下一行
  * MAC系统采用CR表示下一行
+
+### 本地仓库分支push到远程仓库
+
+ * git push <repository> <local banch name>:<branchname for remote repo>
+ * git push origin branch4Sth:branch4Sth  
