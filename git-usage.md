@@ -51,5 +51,5 @@ git config --global core.autocrlf false
 
 ### 本地仓库分支push到远程仓库
 
- * git push <repository> <local banch name>:<branchname for remote repo>
- * git push origin branch4Sth:branch4Sth  
+    git push <repository> <local banch name>:<branchname for remote repo>
+    git push origin branch4Sth:branch4Sth  
