@@ -80,4 +80,4 @@ git config --global core.autocrlf false
     
     barnchB>git cherry-pick b151622a 816f531
     
-    若有冲突，使用git mergetool 解决
+若有冲突，使用git mergetool 解决
