@@ -52,4 +52,32 @@ git config --global core.autocrlf false
 ### 本地仓库分支push到远程仓库
 
     git push <repository> <local banch name>:<branchname for remote repo>
-    git push origin branch4Sth:branch4Sth  
+    git push origin branch4Sth:branch4Sth 
+    
+### 挑选某些commit提交到目标分支上
+
+    branchA> git log to display commit info
+    
+    commit 816f5313da9931643ddebe52b5eea92af2dbee69 (HEAD -> master, origin/master, origin/HEAD)
+Author: zhangguanjun <zhangguanjun@sinovoice.com.cn>
+Date:   Wed Feb 7 15:43:12 2018 +0800
+
+    [CHG] 修改开发指南文档
+
+commit 565376ee22be35632f4b03a3d6d0718c11b224af
+Author: zhangguanjun <zhangguanjun@sinovoice.com.cn>
+Date:   Wed Feb 7 10:42:25 2018 +0800
+
+    [CHG] MusicControl领域添加换一首歌的情景，并处理多个未处理的分支结尾。
+
+commit b151622a89a1d66193b792257547b816724f4125
+Author: zhangguanjun <zhangguanjun@sinovoice.com.cn>
+Date:   Tue Feb 6 11:44:07 2018 +0800
+
+    [CHG] 添加集成文档 IntroductionOfHciBox。
+    
+    Pick commit b151622a 816f531 to branchB
+    
+    barnchB>git cherry-pick b151622a 816f531
+    
+    若有冲突，使用git mergetool 解决
