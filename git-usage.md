@@ -81,3 +81,78 @@ git config --global core.autocrlf false
     barnchB>git cherry-pick b151622a 816f531
     
 若有冲突，使用git mergetool 解决
+
+
+### 删除本地缓存的远程分支
+
+本地会显示远程已被删除的分支，需要删除：
+
+显示所有分支：
+
+<p>
+
+    aiot@aiot MINGW64 /e/workspace/studio_workspace/Git-Voice-Assistant-1.1 (branch4nearfield-dev)
+    $ git branch -a
+      branch4_wake9.0
+      branch4huawei
+      branch4huawei-wake9.0
+      branch4nearfield
+    * branch4nearfield-dev
+      branch4nearfield_dianxin
+      master
+      remotes/origin/HEAD -> origin/master
+      remotes/origin/branch4_wake9.0
+      remotes/origin/branch4huawei
+      remotes/origin/branch4nearfield
+      remotes/origin/branch4nearfield-AIOT-50
+      remotes/origin/branch4nearfield-AIOT-51
+      remotes/origin/branch4nearfield-dev
+      remotes/origin/branch4nearfield_dianxin
+      remotes/origin/master
+  
+查看可以清理的远程分支，`*AIOT-50`,`*AIOT-51`,`*dev`三个分支在远程的orgin仓库中已删，本地可以清理：
+
+ <p>
+
+    aiot@aiot MINGW64 /e/workspace/studio_workspace/Git-Voice-Assistant-1.1 (branch4nearfield-dev)
+    $ git remote prune origin --dry-run
+    Username for 'http://10.1.0.11': aiot
+    Pruning origin
+    URL: http://10.1.0.11/android-app/voice-assistant/voice-assistant-tv.git
+     * [would prune] origin/branch4nearfield-AIOT-50
+     * [would prune] origin/branch4nearfield-AIOT-51
+     * [would prune] origin/branch4nearfield-dev
+     
+清理：
+
+<p>
+
+    aiot@aiot MINGW64 /e/workspace/studio_workspace/Git-Voice-Assistant-1.1 (branch4nearfield-dev)
+    $ git remote prune origin
+    Username for 'http://10.1.0.11': aiot
+    Pruning origin
+    URL: http://10.1.0.11/android-app/voice-assistant/voice-assistant-tv.git
+     * [pruned] origin/branch4nearfield-AIOT-50
+     * [pruned] origin/branch4nearfield-AIOT-51
+     * [pruned] origin/branch4nearfield-dev
+     
+
+再次查看
+
+<p>
+
+    aiot@aiot MINGW64 /e/workspace/studio_workspace/Git-Voice-Assistant-1.1 (branch4nearfield-dev)
+    $ git branch -a
+      branch4_wake9.0
+      branch4huawei
+      branch4huawei-wake9.0
+      branch4nearfield
+    * branch4nearfield-dev
+      branch4nearfield_dianxin
+      master
+      remotes/origin/HEAD -> origin/master
+      remotes/origin/branch4_wake9.0
+      remotes/origin/branch4huawei
+      remotes/origin/branch4nearfield
+      remotes/origin/branch4nearfield_dianxin
+      remotes/origin/master
