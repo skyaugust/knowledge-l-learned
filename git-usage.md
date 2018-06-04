@@ -174,3 +174,9 @@ git config --global core.autocrlf false
     git clean -nxfd
     git clean -nf
     git clean -nfd
+    
+### 修改commit message
+
+重写最近一次提交的commit信息,[更详细](https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits)
+    
+    git commit --amend -m "your new message"
