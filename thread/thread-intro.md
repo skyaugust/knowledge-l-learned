@@ -164,6 +164,21 @@ wait notify为什么强制要求当前线程先获得monitor lock，然后在mon
 wait notify使用有如此多的限制，使用起来并不是很方便，尤其是condition较多的情况下，需要非常仔细地处理。可以参考死锁例子中，使用wait notify是啰嗦的。建议使用CountDownLatch以及其他同步路障来替换。
 
 ### volatile关键字
+volatile 能确保每个线程读取变量的值，都是最近被修改的取值。但它和原子性无关，类似如下这种代码，对于`count ++`的非原子性无任何影响。
+
+    volatile int count = 0;
+    count ++;
+
+
+直接引用Java并发编程上的解释：
+>当把变量声明为volatile类型后，编译器与运行时都会注意到这个变量是被共享的，因此不会将该变量上的操作与其他内存操作一起重排序。volatile变量不会被缓存在寄存器或者其多其他处理器不可见的地方，因此在读取volatile类型的变量时，总会返回最新写入的值。
+
+>仅当volatile变量能简化代码的实现以及对同步侧率的验证时，才能使用他们。
+
+>加锁机制既可以保证可见性又可以确保原子性，二volatile只确保可见性
+
+所以volatile适合做在多线程场景下标志、某些条件的达成、发生中断等场景。他比起锁更轻量
+
 ## 性能
 
 加锁、尝试获得锁这两个基本操作本身是有开销的。特别是尝试获得锁，失败后会切换线程上下文，造成一定开销。另外锁过多，会导致大量线程调用被阻塞着，从业务角度看，性能有很大损失。
@@ -308,3 +323,10 @@ A single thread is allowed to lock the same object multiple times. For each obje
 A thread in the Java virtual machine requests a lock when it arrives at the beginning of a monitor region. In Java, there are two kinds of monitor regions: synchronized statements and synchronized methods. (These are described in detail later in this chapter.) Each monitor region in a Java program is associated with an object reference. When a thread arrives at the first instruction in a monitor region, the thread must obtain a lock on the referenced object. The thread is not allowed to execute the code until it obtains the lock. Once it has obtained the lock, the thread enters the block of protected code. When the thread leaves the block, no matter how it leaves the block, it releases the lock on the associated object.
 
 Note that as a Java programmer, you never explicitly lock an object. Object locks are internal to the Java virtual machine. In your Java programs, you identify the monitor regions of your program by writing synchronized statements and methods. As the Java virtual machine runs your program, it automatically locks an object or class every time it encounters a monitor region.
+
+
+##参考资料
+
+* Java内存模型[JSR-133: Java Memory Model and Thread Specification](http://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf)
+* wait notify为什么必须在synchronized中[why-wait-must-be-in-synchronized](http://programming.guide/java/why-wait-must-be-in-synchronized.html)
+* 虚假唤醒[Spurious wakeup](https://en.wikipedia.org/wiki/Spurious_wakeup)
