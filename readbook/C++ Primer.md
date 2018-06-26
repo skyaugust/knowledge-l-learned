@@ -113,3 +113,16 @@ inflatable hat2 = hat// 复制一份，而非引用复制。
 
 ### 共用体（union），匿名共用体
 
+可存放多个变量，存储空间为最长的那个元素，同时只有一个变量生效。
+
+### 枚举
+
+### new 分配内存
+
+typeName * pointer_name = new typeName;
+
+内存不足，new 返回0，称之为空值指针；还有可能发生bad_alloc异常
+
+### delete 释放内存
+
+delete pointer_name

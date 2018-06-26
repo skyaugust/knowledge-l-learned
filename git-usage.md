@@ -180,3 +180,11 @@ git config --global core.autocrlf false
 重写最近一次提交的commit信息,[更详细](https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits)
     
     git commit --amend -m "your new message"
+
+### git status显示中文
+
+中文路径或文件名显示为"\344\272\345"类似，修改如下配置：
+
+    git config --global core.quotepath false
+
+这些数字是八进制下的utf码。当字符编码值超过0x80（双字节以上的），都会显示为utf码。设置为false，则会正常显示
