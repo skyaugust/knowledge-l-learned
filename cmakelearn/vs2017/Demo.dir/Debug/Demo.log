@@ -1,0 +1,11 @@
+﻿  Building Custom Rule E:/gitRepo/cmakelearn/CMakeLists.txt
+  CMake does not need to re-run because E:/gitRepo/cmakelearn/vs2017/CMakeFiles/generate.stamp is up-to-date.
+  MathFunctions.cpp
+e:\gitrepo\cmakelearn\mathfunctions.cpp(5): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\gitrepo\cmakelearn\mathfunctions.cpp(14): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+  main.cc
+e:\gitrepo\cmakelearn\main.cc(16): warning C4477: 'printf' : format string '%g' requires an argument of type 'double', but variadic argument 2 has type 'int'
+e:\gitrepo\cmakelearn\main.cc(16): warning C4474: 'printf' : too many arguments passed for format string
+  e:\gitrepo\cmakelearn\main.cc(16): note: placeholders and their parameters expect 2 variadic arguments, but 3 were provided
+  Generating Code...
+  Demo.vcxproj -> E:\gitRepo\cmakelearn\vs2017\Debug\Demo.exe
