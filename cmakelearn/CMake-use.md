@@ -3,6 +3,7 @@
 References:
 1. [cmake.org](https://cmake.org)
 2. [Cmake Intro](http://www.hahack.com/codes/cmake/)
+3. [Cmake的一些小经验](http://www.cppblog.com/skyscribe/archive/2009/12/14/103208.aspx)
 
 ## Single Source
 

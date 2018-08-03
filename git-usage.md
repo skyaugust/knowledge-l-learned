@@ -1,4 +1,10 @@
 
+# Git使用记录
+
+## Ref:
+
+1. [图解Git](https://marklodato.github.io/visual-git-guide/index-zh-cn.html)
+2. [官网](https://git-scm.com/)
 
 
 ### 从svn迁到git
