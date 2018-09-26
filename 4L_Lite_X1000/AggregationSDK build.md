@@ -1,2 +1,0 @@
-# AggregationSDK build
-
