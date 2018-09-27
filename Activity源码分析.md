@@ -44,19 +44,19 @@ Looper.getMainLooper()获取主线程的Looper，从而做到与主线程通信�
   
 ## 创建一个Activity的过程
 
-Activity.startActivityForResult(intent, resquestCode)
-  Activit.mParent.startActivityForResult(intent, resquestCode)
-     mInstrumentation.execStartActivity(mMainThread.getApplicationThread, intent, resquestCode)
-         ActivityManagerNative.getDefault().startActivities(applicationThread, intent, resquestCode)
-             ActivityManagerProxy.startActivity(applicationThread, intent, requestCode)
-                   encapsulate (applicationThread, intent, requestCode) into data
-                   mRemote.transact(START_ACTIVITY_TRANSACTION, data, ...)
-                   mRemote.onTransact(code, data)
-                      onTransact中的代码在AMS进程中执行
-                      ActivityManagerService.startActivity(applicationThread, intent, requestCode)
-                         ActivityManagerService.startActivityAsUser(applicationThread, intent, requestCode）
-                              ActivityStarter.startActivityMayWait(applicationThread, intent, requestCode)
-                                  ActivityStarter.startActivityLocked(applicationThread, intent, requestCode)
+    Activity.startActivityForResult(intent, resquestCode)
+      Activit.mParent.startActivityForResult(intent, resquestCode)
+         mInstrumentation.execStartActivity(mMainThread.getApplicationThread, intent, resquestCode)
+             ActivityManagerNative.getDefault().startActivities(applicationThread, intent, resquestCode)
+                 ActivityManagerProxy.startActivity(applicationThread, intent, requestCode)
+                       encapsulate (applicationThread, intent, requestCode) into data
+                       mRemote.transact(START_ACTIVITY_TRANSACTION, data, ...)
+                       mRemote.onTransact(code, data)
+                          onTransact中的代码在AMS进程中执行
+                          ActivityManagerService.startActivity(applicationThread, intent, requestCode)
+                             ActivityManagerService.startActivityAsUser(applicationThread, intent, requestCode）
+                                  ActivityStarter.startActivityMayWait(applicationThread, intent, requestCode)
+                                      ActivityStarter.startActivityLocked(applicationThread, intent, requestCode)
                                   
                                   
                       
