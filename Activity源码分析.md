@@ -1,4 +1,4 @@
-# Activity 生命周期
+# Activity 
 
 Activity是Android应用中实现与用户直接交互的基本组件。开发者继承一个Activity，实现其定义的生命周期方法，即可展示一个显示在系统屏幕上的界面。
 
@@ -42,7 +42,29 @@ Looper.getMainLooper()获取主线程的Looper，从而做到与主线程通信�
   ## 最初的若干main handler处理
 
   
+## 创建一个Activity的过程
 
+Activity.startActivityForResult(intent, resquestCode)
+  Activit.mParent.startActivityForResult(intent, resquestCode)
+     mInstrumentation.execStartActivity(mMainThread.getApplicationThread, intent, resquestCode)
+         ActivityManagerNative.getDefault().startActivities(applicationThread, intent, resquestCode)
+             ActivityManagerProxy.startActivity(applicationThread, intent, requestCode)
+                   encapsulate (applicationThread, intent, requestCode) into data
+                   mRemote.transact(START_ACTIVITY_TRANSACTION, data, ...)
+                   mRemote.onTransact(code, data)
+                      onTransact中的代码在AMS进程中执行
+                      ActivityManagerService.startActivity(applicationThread, intent, requestCode)
+                         ActivityManagerService.startActivityAsUser(applicationThread, intent, requestCode）
+                              ActivityStarter.startActivityMayWait(applicationThread, intent, requestCode)
+                                  ActivityStarter.startActivityLocked(applicationThread, intent, requestCode)
+                                  
+                                  
+                      
+                   
+                 
+         
+     
+  
  
 
 public static void main(String[] args) {
